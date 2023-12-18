@@ -1,0 +1,177 @@
+1. Selection sort
+void selectionsort(int arr[],int size){
+    
+    for(int i=0;i<size;i++){
+        int min = i;
+        for(int j=i+1;j<size;j++){
+            if(arr[min]>arr[j]){
+                min=j;
+            }
+        }
+        swap(arr[i],arr[min]);
+    }
+}
+
+2. Insertion Sort 
+void insertionsort(int arr[],int size){
+    for(int i=1;i<size;i++){
+        int j=i;
+        while(j>0 && arr[j-1]>arr[j]){
+            swap(arr[j],arr[j-1]);
+            j--;
+        }
+        
+}
+}
+
+3. Merge Sort
+void merge(int arr[],int low,int mid,int high){
+    int leftindex = mid-low+1;
+    int rightindex = high-mid;
+
+    int left[leftindex];
+    int right[rightindex];
+
+    for(int i=0;i<leftindex;i++){
+        left[i] = arr[low+i];
+    }
+    for(int i=0;i<rightindex;i++){
+        right[i] = arr[mid+i+1];
+    }
+    int i=0,j=0,k=low;
+
+    while(i<leftindex && j< rightindex){
+        if(left[i]<right[j]){
+            arr[k]=left[i];
+            i++;
+        }
+        else{
+            arr[k]= right[j];
+            j++;
+        }
+        k++;
+    }
+    while(j<rightindex ){
+        arr[k] = right[j];
+        j++;
+        k++;
+
+    }
+    while(i<leftindex){
+        arr[k] = left[i];
+        i++;
+        k++;
+        
+    }
+}
+
+void mergesort(int arr[],int low,int high){
+    if(low<high){
+         int mid = (low+high)/2;
+         mergesort(arr,low,mid);
+         mergesort(arr,mid+1,high);
+         merge(arr,low,mid,high);
+    }
+   
+
+}
+
+4. Quick Sort 
+int partition(int arr[], int low, int high) {
+    int pivot = arr[low];  // Choose the pivot element (in this case, the first element)
+    int i = low + 1;        // Index to traverse from the left
+    int j = high;           // Index to traverse from the right
+
+    while (i <= j) {
+        while (arr[i] < pivot && i <= high) {
+            i++;
+        }
+
+        while (arr[j] > pivot && j >= low) {
+            j--;
+        }
+
+        if (i <= j) {
+            // Swap arr[i] and arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    // Swap the pivot element with arr[j]
+    int temp = arr[low];
+    arr[low] = arr[j];
+    arr[j] = temp;
+
+    return j;  // Return the index where pivot is now placed
+}
+
+void quicksort(int arr[], int low, int high) {
+    if (low < high) {
+        int pivotIndex = partition(arr, low, high);
+        quicksort(arr, low, pivotIndex - 1);
+        quicksort(arr, pivotIndex + 1, high);
+    }
+}
+
+Tree traversals
+in order - left root right
+pre order - root left right
+post order - left right root
+
+5. bfs can pass no of vertices and visited array also as parameters.
+ void bfs(int arr[4][4],int source){
+    vis[source] = 1;
+    queue <int> q ;
+    q.push(source);
+    while(q.size()>0){
+        int u = q.front();
+        q.pop();
+        for(int i=0;i<4;i++){
+            if(arr[u][i]==1 && vis[i]==0){
+                q.push(i);
+                vis[i] = 1;
+            }
+        }
+    }
+    
+}
+
+6 . dfs
+void dfs(int arr[4][4],int source){
+    count++;
+    vis[source] = count;
+    
+    if(vis[source]!=0)
+    cout<<source<<"\t";
+    
+    
+    for(int i=0;i<4;i++){
+        if(arr[source][i]==1 && vis[i]==0)
+        dfs(arr,i);
+    }
+    
+}
+
+7. floyd all pair shortest path
+void floyd(int arr[4][4]){
+    for(int k=0;k<4;k++){
+          for(int i=0;i<4;i++){
+              for(int j=0;j<4;j++){
+                  arr[i][j] = min(arr[i][j],arr[i][k]+arr[k][j]);
+              }
+          }
+    }
+}
+
+8. void warshall(int arr[4][4]){
+    for(int k=0;k<4;k++){
+          for(int i=0;i<4;i++){
+              for(int j=0;j<4;j++){
+                  arr[i][j] = max(arr[i][j],arr[i][k] && arr[k][j]);
+              }
+          }
+    }
